@@ -1,0 +1,19 @@
+<div class="px-auto">
+    <div class="carousel w-full">
+        <div class="carousel-item w-full px-44">
+            <div class="mr-32">
+                <app-timechart [data]="data"></app-timechart>
+            </div>
+            <div>
+                <h1>Hallo</h1>
+            </div>
+        </div>
+        <div id="details" class="carousel-item w-full">
+            <img src="https://daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg" class="w-full" />
+        </div>
+    </div>
+    <div class="flex justify-center w-full py-2 gap-2">
+        <a [routerLink]="['/dashboard/#home']" class="btn btn-xs">1</a>
+        <a [routerLink]="['/dashboard/#details']" class="btn btn-xs">2</a>
+    </div>
+</div>
