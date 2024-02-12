@@ -1,0 +1,30 @@
+<div class="text-center items-center mt-64">
+    <h1 class="mb-4 text-6xl font-semibold text-red-500">404</h1>
+    <p class="mb-4 text-lg text-gray-600">Oops! Looks like you're lost.</p>
+    <div class="animate-bounce">
+        <svg class="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8">
+            </path>
+        </svg>
+    </div>
+    <p class="mt-4 text-gray-600">Here are some usefull links: </p>
+    <div class="flex flex-row justify-around mt-4">
+        <div class="mt-4 w-1/5 flex flex-row items-center justify-around">
+            <div class="mr-5">
+                <a class="btn btn-default btn-outline" (click)="goBack()">
+                    <div class="hidden 2xl:block">
+                        <mat-icon>arrow_back</mat-icon>
+                    </div>
+                    <span>Go back</span>
+                </a>
+            </div>
+
+            <div>
+                <a class="btn btn-neutral" routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">
+                    Take me home
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
