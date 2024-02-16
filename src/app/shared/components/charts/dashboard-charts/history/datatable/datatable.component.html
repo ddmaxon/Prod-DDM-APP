@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="hover" *ngFor="let item of historyData; index as i" (contextmenu)="onrightClick($event)">
+                <tr class="hover" *ngFor="let item of historyData; index as i" (contextmenu)="onrightClick($event)" (dbclick)="openModal()">
                     <th>{{i + 1}}</th>
                     <td>{{item.values.date}} {{item.values.time}}</td>
                     <td>{{item.name}}</td>
@@ -71,10 +71,10 @@
                         </ng-template>
                     </td>
                     <td>
-                        <a data-modal-target="static-modal" data-modal-toggle="static-modal"
+                        <button data-modal-target="static-modal" data-modal-toggle="static-modal"
                             class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            type="button" class="text-blue-500 cursor-pointer"
-                            (click)="setSelectedHistoryData(item)">Visit</a>
+                            type="button" class="text-blue-500 cursor-pointer" id="detailedInfoBtn"
+                            (click)="setSelectedHistoryData(item)">Visit</button>
                     </td>
                 </tr>
             </tbody>

@@ -230,4 +230,11 @@ export class DatatableComponent implements OnInit {
   disableContextMenu() {
     this.contextmenu = false;
   }
+
+  openModal(){
+    const detailedInfoBtn = document.getElementById('detailedInfoBtn');
+    if (detailedInfoBtn) {
+      detailedInfoBtn.click();
+    }
+  }
 }
