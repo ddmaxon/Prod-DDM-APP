@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Sort } from '@angular/material/sort';
 import { ContextmenuComponent } from '../../../../contextmenu/contextmenu.component';
+import { ProgressChartsComponent } from '../../../progress-charts/progress-charts.component';
+import { DetailedHistoryModalComponent } from '../../../../modals/detailed-history-modal/detailed-history-modal.component';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-datatable',
@@ -11,14 +13,20 @@ import { ContextmenuComponent } from '../../../../contextmenu/contextmenu.compon
     CommonModule,
     ContextmenuComponent,
     MatIcon,
+    ProgressChartsComponent,
+    DetailedHistoryModalComponent
   ],
   templateUrl: './datatable.component.html',
   styleUrl: './datatable.component.scss'
 })
 export class DatatableComponent implements OnInit {
+  @ViewChild(DetailedHistoryModalComponent) modalComponent!: DetailedHistoryModalComponent;
+
+  hoveredHistoryData: any = null;
 
   historyData: any = [
     {
+      id: "Aosdijasdoiasd",
       name: "MMAGIPC7224_230710_060420_LogFile_Framework_2012.csv",
       values: {
         testData: {
@@ -55,6 +63,7 @@ export class DatatableComponent implements OnInit {
       }
     },
     {
+      id: "AwlisdUiweazqqwasd",
       name: "HWA13676_230711_060549_LogFile_Framework_2012.csv",
       values: {
         testData: {
@@ -91,6 +100,7 @@ export class DatatableComponent implements OnInit {
       }
     },
     {
+      id: "ouzapowdapoDapohsad",
       name: "test.csv",
       values: {
         testData: {
@@ -127,6 +137,7 @@ export class DatatableComponent implements OnInit {
       }
     },
     {
+      id: "adalbaWaluidhaushdlö",
       name: "test2.csv",
       values: {
         testData: {
@@ -153,7 +164,7 @@ export class DatatableComponent implements OnInit {
         process: {
           status: "Airing",
           time: "00:00:00",
-          progress: 5,
+          progress: 7.407,
           message: "Airing",
           log: "https://www.google.com",
           error: "https://www.google.com",
@@ -172,11 +183,25 @@ export class DatatableComponent implements OnInit {
   contextmenuX = 0;
   contextmenuY = 0;
 
+  showModal: boolean = false;
 
-  constructor() { }
+
+  constructor(
+    private route: Router
+  ) { }
 
   ngOnInit() {
+    if(this.route.url.includes('detailedInfo')){
+      this.showModal = true;
+    }
     this.sort('values.process.status');
+    this.setId(1);
+  }
+
+  setId(startId: any) {
+    this.historyData.forEach((data: any, index: number) => {
+      data.index = startId + index;
+    });
   }
 
   sort(path: string) {
@@ -217,6 +242,7 @@ export class DatatableComponent implements OnInit {
 
   setSelectedHistoryData(data: any) {
     this.selectedHistoryData = data;
+    console.log(this.selectedHistoryData);
   }
 
   //activates the menu with the coordinates
@@ -231,10 +257,12 @@ export class DatatableComponent implements OnInit {
     this.contextmenu = false;
   }
 
-  openModal(){
-    const detailedInfoBtn = document.getElementById('detailedInfoBtn');
-    if (detailedInfoBtn) {
-      detailedInfoBtn.click();
-    }
+  openModal(data: any) {
+    this.selectedHistoryData = data;
+    this.showModal = true
+  }
+
+  closeModal(){
+    this.showModal = false;
   }
 }
