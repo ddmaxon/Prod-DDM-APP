@@ -1,0 +1,93 @@
+<div (click)="disableContextMenu()" oncontextmenu="return false;">
+    <div class="overflow-x-auto">
+        <table class="table">
+            <!-- head -->
+            <thead>
+                <tr>
+                    <th></th>
+                    <th (click)="sort('values.date')" class="cursor-pointer">Date</th>
+                    <th (click)="sort('name')" class="cursor-pointer">Filename</th>
+                    <th (click)="sort('values.process.status')" class="cursor-pointer">Process</th>
+                    <th (click)="sort('values.testData.testPass')" class="cursor-pointer">Tests passed</th>
+                    <th (click)="sort('values.testData.testFail')" class="cursor-pointer">Faild Tests</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover" *ngFor="let item of historyData" (contextmenu)="onrightClick($event)" (dbclick)="openModal(item)" (mouseenter)="selectedHistoryData = item" >
+                    <th>{{item.index}}</th>
+                    <td>{{item.values.date}} {{item.values.time}}</td>
+                    <td>{{item.name}}</td>
+                    <td>
+                        <div class="flex flex-row text-green-500"
+                            *ngIf="item.values.process.status === 'Finished'; else isNotFinished">
+                            <div class="mr-2">
+                                <mat-icon>check_circle</mat-icon>
+                            </div>
+                            <span class="mt-0.5">Finished</span>
+                        </div>
+
+                        <ng-template #isNotFinished>
+                            <div class="flex flex-row text-orange-600">
+                                <div class="mr-2">
+                                    <mat-icon>autorenew</mat-icon>
+                                </div>
+                                <span class="mt-0.5">Airing</span>
+                            </div>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <div class="badge badge-success gap-2"
+                            *ngIf="item.values.testData.testPass === item.values.testData.testCount; else isNotTheSame">
+                            <span>{{item.values.testData.testPass}}</span>/
+                            <span>{{item.values.testData.testCount}}</span>
+                        </div>
+                        <ng-template #isNotTheSame>
+                            <div class="badge badge-warning gap-2">
+                                <span class="text-red-600">{{item.values.testData.testPass}}</span>/
+                                <span>{{item.values.testData.testCount}}</span>
+                            </div>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <div class="badge badge-success gap-2"
+                            *ngIf="item.values.testData.testFail === 0; else isNotTheSame2">
+                            <span>0</span>/ <span>{{item.values.testData.testCount}}</span>
+                        </div>
+                        <ng-template #isNotTheSame2>
+                            <div class="badge badge-warning gap-2"
+                                *ngIf="item.values.testData.testFail <= item.values.testData.testCount / 2; else isMoreThanHalf">
+                                <span class="text-red-600">{{item.values.testData.testFail}}</span>/
+                                <span>{{item.values.testData.testCount}}</span>
+                            </div>
+
+                            <ng-template #isMoreThanHalf>
+                                <div class="badge badge-error gap-2">
+                                    <span>{{item.values.testData.testFail}}</span>/
+                                    <span>{{item.values.testData.testCount}}</span>
+                                </div>
+                            </ng-template>
+
+                        </ng-template>
+                    </td>
+                    <td>
+                        <button
+                            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            type="button" class="text-blue-500 cursor-pointer" id="detailedInfoBtn"
+                            (click)="openModal(item)">Visit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="showModal">
+        <app-detailed-history-modal [selectedHistoryData]="selectedHistoryData" (isModalClosed)="closeModal()"></app-detailed-history-modal>
+    </div>
+
+    <!--you have to write this only once in your component-->
+    <div *ngIf="contextmenu">
+        <app-contextmenu [x]="contextmenuX" [y]="contextmenuY"
+            [items]='[{ "text": "Go to home", "url": "/"},{ "text": "Detailed Information", "url": "/dashboard/history/#detailedInfo?id=" + hoveredHistoryData},{ "text": "Download", "url": "/kawas"}]'></app-contextmenu>
+    </div>
+</div>
