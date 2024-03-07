@@ -1,0 +1,17 @@
+.content-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 700px
+}
+
+.explanations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.content-box {
+    max-width: 700px;
+}
