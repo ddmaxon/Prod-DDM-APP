@@ -60,7 +60,7 @@ export class TimechartComponent implements OnInit {
     let series: any = [];
     let labels: any = [];
 
-    await this.data.data.execTimeline.sorted.forEach((index: any) => {
+    await this.data.data.sorted.forEach((index: any) => {
       series.push(index.value.count);
       labels.push(index.key);
     });
@@ -68,6 +68,4 @@ export class TimechartComponent implements OnInit {
     this.chartOptions.series = series;
     this.chartOptions.labels = labels;
   }
-
-  
 }

@@ -1,268 +1,203 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
-import { ContextmenuComponent } from '../../../../contextmenu/contextmenu.component';
-import { ProgressChartsComponent } from '../../../progress-charts/progress-charts.component';
-import { DetailedHistoryModalComponent } from '../../../../modals/detailed-history-modal/detailed-history-modal.component';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {ContextmenuComponent} from '../../../../contextmenu/contextmenu.component';
+import {ProgressChartsComponent} from '../../../progress-charts/progress-charts.component';
+import {
+    DetailedHistoryModalComponent
+} from '../../../../modals/detailed-history-modal/detailed-history-modal.component';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+import {RequestService} from "../../../../../core/request.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @Component({
-  selector: 'app-datatable',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ContextmenuComponent,
-    MatIcon,
-    ProgressChartsComponent,
-    DetailedHistoryModalComponent
-  ],
-  templateUrl: './datatable.component.html',
-  styleUrl: './datatable.component.scss'
+    selector: 'app-datatable',
+    standalone: true,
+    imports: [
+        CommonModule,
+        ContextmenuComponent,
+        MatIcon,
+        ProgressChartsComponent,
+        DetailedHistoryModalComponent,
+        HttpClientModule
+    ],
+    templateUrl: './datatable.component.html',
+    styleUrl: './datatable.component.scss',
+    providers: [RequestService, HttpClient]
 })
 export class DatatableComponent implements OnInit {
-  @ViewChild(DetailedHistoryModalComponent) modalComponent!: DetailedHistoryModalComponent;
+    @ViewChild(DetailedHistoryModalComponent) modalComponent!: DetailedHistoryModalComponent;
 
-  hoveredHistoryData: any = null;
+    public hoveredHistoryData: any = null;
+    public historyData: any = [];
+    public filteredItems: any = [];
 
-  historyData: any = [
-    {
-      id: "Aosdijasdoiasd",
-      name: "MMAGIPC7224_230710_060420_LogFile_Framework_2012.csv",
-      values: {
-        testData: {
-          testCount: 4,
-          testPass: 4,
-          testFail: 0,
-          testPassRate: 100,
-          tests: [
-            {
-              name: "Test 1",
-              result: "Pass",
-              time: "00:00:00",
-              vals: []
-              //...
-            },
-            //...
-          ],
-        },
-        date: "2021-06-04",
-        time: "20:12:00",
-        type: "csv (MotTestLog)",
-        size: "1.2MB",
-        download: "https://www.google.com",
-        process: {
-          status: "Finished",
-          time: "00:00:00",
-          progress: 100,
-          message: "Finished",
-          log: "https://www.google.com",
-          error: "https://www.google.com",
-          //...
-        }
-        //...
-      }
-    },
-    {
-      id: "AwlisdUiweazqqwasd",
-      name: "HWA13676_230711_060549_LogFile_Framework_2012.csv",
-      values: {
-        testData: {
-          testCount: 43,
-          testPass: 41,
-          testFail: 2,
-          testPassRate: 95.3,
-          tests: [
-            {
-              name: "Test 1",
-              result: "Pass",
-              time: "00:00:00",
-              vals: []
-              //...
-            },
-            //...
-          ],
-        },
-        date: "2021-06-04",
-        time: "20:12:00",
-        type: "csv (MotTestLog)",
-        size: "48MB",
-        download: "https://www.google.com",
-        process: {
-          status: "Finished",
-          time: "00:00:00",
-          progress: 100,
-          message: "Finished",
-          log: "https://www.google.com",
-          error: "https://www.google.com",
-          //...
-        }
-        //...
-      }
-    },
-    {
-      id: "ouzapowdapoDapohsad",
-      name: "test.csv",
-      values: {
-        testData: {
-          testCount: 30,
-          testPass: 4,
-          testFail: 26,
-          testPassRate: 100,
-          tests: [
-            {
-              name: "Test 1",
-              result: "Pass",
-              time: "00:00:00",
-              vals: []
-              //...
-            },
-            //...
-          ],
-        },
-        date: "2021-06-04",
-        time: "20:12:00",
-        type: "csv (MotTestLog)",
-        size: "1.2MB",
-        download: "https://www.google.com",
-        process: {
-          status: "Finished",
-          time: "00:00:00",
-          progress: 100,
-          message: "Finished",
-          log: "https://www.google.com",
-          error: "https://www.google.com",
-          //...
-        }
-        //...
-      }
-    },
-    {
-      id: "adalbaWaluidhaushdlö",
-      name: "test2.csv",
-      values: {
-        testData: {
-          testCount: 54,
-          testPass: 4,
-          testFail: 0,
-          testPassRate: 100,
-          tests: [
-            {
-              name: "Test 1",
-              result: "Pass",
-              time: "00:00:00",
-              vals: []
-              //...
-            },
-            //...
-          ],
-        },
-        date: "2021-06-04",
-        time: "20:12:00",
-        type: "csv (MotTestLog)",
-        size: "1.2MB",
-        download: "https://www.google.com",
-        process: {
-          status: "Airing",
-          time: "00:00:00",
-          progress: 7.407,
-          message: "Airing",
-          log: "https://www.google.com",
-          error: "https://www.google.com",
-          //...
-        }
-        //...
-      }
-    },
-  ];
+    public selectedHistoryData: any = this.historyData[0];
+    public sortOrder: string = 'asc';
 
-  selectedHistoryData: any = this.historyData[0];
+    public contextmenu = false;
+    public contextmenuX = 0;
+    public contextmenuY = 0;
 
-  sortOrder: string = 'asc';
-
-  contextmenu = false;
-  contextmenuX = 0;
-  contextmenuY = 0;
-
-  showModal: boolean = false;
+    public showModal: boolean = false;
+    public isRequesting: boolean = false;
 
 
-  constructor(
-    private route: Router
-  ) { }
-
-  ngOnInit() {
-    if(this.route.url.includes('detailedInfo')){
-      this.showModal = true;
+    constructor(
+        private route: Router,
+        private requester: RequestService
+    ) {
     }
-    this.sort('values.process.status');
-    this.setId(1);
-  }
 
-  setId(startId: any) {
-    this.historyData.forEach((data: any, index: number) => {
-      data.index = startId + index;
-    });
-  }
+    async ngOnInit() {
+        this.isRequesting = true;
 
-  sort(path: string) {
-    const sortOrder = this.sortOrder || 'asc';
-    const sortOrderMultiplier = sortOrder === 'asc' ? 1 : -1;
+        if (this.route.url.includes('detailedInfo')) {
+            this.showModal = true;
+        }
+        this.sort('values.process.status');
+        this.setId(1);
 
-    this.historyData = this.historyData.slice().sort((a: any, b: any) => {
-      const valueA = this.getValueByPath(a, path);
-      const valueB = this.getValueByPath(b, path);
+        //Get the history
+        const data = (await this.requester.GET('/csv/recent/history/1'))
 
-      let result: number;
-      if (typeof valueA === 'string' && typeof valueB === 'string') {
-        result = valueA.localeCompare(valueB);
-      } else {
-        result = valueA - valueB;
-      }
+        if (data.isSuccessfull) {
+            this.historyData = data.data;
+        } else {
+            throw new Error(data.message)
+        }
 
-      return result * sortOrderMultiplier;
-    });
+        this.isRequesting = false;
 
-    // Umkehrung der Sortierreihenfolge für das nächste Mal
-    this.sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-  }
-
-  getValueByPath(obj: any, path: string): any {
-    const keys = path.split('.');
-    let value = obj;
-    for (const key of keys) {
-      if (value[key] !== undefined) {
-        value = value[key];
-      } else {
-        // Wenn das Objekt keinen Wert für den angegebenen Schlüssel hat, gib undefined zurück
-        return undefined;
-      }
+        this.filteredItems = this.historyData; // Initial werden alle Elemente angezeigt
     }
-    return value;
-  }
 
-  setSelectedHistoryData(data: any) {
-    this.selectedHistoryData = data;
-    console.log(this.selectedHistoryData);
-  }
+    setId(startId: any) {
+        this.historyData.forEach((data: any, index: number) => {
+            data.index = startId + index;
+        });
+    }
 
-  //activates the menu with the coordinates
-  onrightClick(event: any) {
-    this.contextmenuX = event.x
-    this.contextmenuY = event.y
-    this.contextmenu = true;
-  }
+    search(event: Event, searchTerm: string): void {
+        event.preventDefault();
+        
+        if (!searchTerm.trim()) {
+            this.filteredItems = this.historyData; // Wenn der Suchbegriff leer ist, werden alle Elemente angezeigt
+        } else {
+            const searchTermLowerCase = searchTerm.toLowerCase();
+            this.filteredItems = this.historyData.filter((item: any) =>
+                item.name.toLowerCase().includes(searchTermLowerCase) ||
+                item.values.process.status.toLowerCase().includes(searchTermLowerCase)
+            );
+        }
+    }
 
-  //disables the menu
-  disableContextMenu() {
-    this.contextmenu = false;
-  }
+    sort(path: string) {
+        const sortOrder = this.sortOrder || 'asc';
+        const sortOrderMultiplier = sortOrder === 'asc' ? 1 : -1;
 
-  openModal(data: any) {
-    this.selectedHistoryData = data;
-    this.showModal = true
-  }
+        this.historyData = this.historyData.slice().sort((a: any, b: any) => {
+            const valueA = this.getValueByPath(a, path);
+            const valueB = this.getValueByPath(b, path);
 
-  closeModal(){
-    this.showModal = false;
-  }
+            let result: number;
+            if (typeof valueA === 'string' && typeof valueB === 'string') {
+                result = valueA.localeCompare(valueB);
+            } else {
+                result = valueA - valueB;
+            }
+
+            return result * sortOrderMultiplier;
+        });
+
+        // Umkehrung der Sortierreihenfolge für das nächste Mal
+        this.sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+
+    getValueByPath(obj: any, path: string): any {
+        const keys = path.split('.');
+        let value = obj;
+        for (const key of keys) {
+            if (value[key] !== undefined) {
+                value = value[key];
+            } else {
+                // Wenn das Objekt keinen Wert für den angegebenen Schlüssel hat, gib undefined zurück
+                return undefined;
+            }
+        }
+        return value;
+    }
+
+    setSelectedHistoryData(data: any) {
+        this.selectedHistoryData = data;
+        console.log(this.selectedHistoryData);
+    }
+
+    //activates the menu with the coordinates
+    onrightClick(event: any) {
+        this.contextmenuX = event.x
+        this.contextmenuY = event.y
+        this.contextmenu = true;
+    }
+
+    //disables the menu
+    disableContextMenu() {
+        this.contextmenu = false;
+    }
+
+    openModal(data: any) {
+        this.selectedHistoryData = data;
+        this.showModal = true
+    }
+
+    closeModal() {
+        this.showModal = false;
+    }
+
+    countAiringItems(items: any): number | string {
+        let airingCount = 0;
+        for (const item of items) {
+            if (item.values.process.status === "Airing") {
+                airingCount++;
+            }
+        }
+
+        if (airingCount == 0) {
+            return "No items found";
+        }
+
+        return airingCount;
+    }
+
+    countTotalTests(items: any): Number {
+        let totalPass = 0;
+        let totalFail = 0;
+        for (const item of items) {
+            totalPass += item.values.testData.testPass;
+            totalFail += item.values.testData.testFail;
+        }
+        return totalPass + totalFail;
+    }
+
+    countFinishedItems(items: any): number | string {
+        let finishedCount = 0;
+        for (const item of items) {
+            if (item.values.process.status === "Finished") {
+                finishedCount++;
+            }
+        }
+
+        if (finishedCount == 0) {
+            return "No items found";
+        }
+
+        return finishedCount;
+    }
+
+    isNumber(data: any): boolean {
+        if (typeof Number == typeof data) {
+            return true;
+        }
+        return false;
+    }
 }
