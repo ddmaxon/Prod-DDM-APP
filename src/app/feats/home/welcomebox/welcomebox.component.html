@@ -10,70 +10,40 @@
     </div>
 </div>
 
-<div class="text-center mt-10">
-    <h1>Understanding ApexCharts</h1>
-    <p>ApexCharts is a modern JavaScript charting library that helps developers to create interactive visualizations
-        for web applications. It offers a wide range of chart types, customization options, and features.</p>
-
-    <div id="chart"></div> <!-- Hier wird das Diagramm gerendert -->
-
-    <div class="explanations">
-        <div class="content-box">
-            <h2>Customization</h2>
-            <p>One of the key features of ApexCharts is its flexibility and customization options. You can customize
-                almost every aspect of the chart, including colors, labels, axes, tooltips, and more. Refer to the
-                ApexCharts documentation for a comprehensive list of available options.</p>
-        </div>
-
-        <div class="content-box">
-            <h2>Interactivity</h2>
-            <p>ApexCharts provides built-in support for interactivity, allowing users to zoom, pan, hover over data
-                points for details, and toggle series visibility. These features enhance the user experience and make
-                the charts more engaging.</p>
-        </div>
-
-        <div class="content-box">
-            <h2>Conclusion</h2>
-            <p>ApexCharts is a powerful and versatile charting library that simplifies the process of creating beautiful
-                and interactive charts for web applications. Whether you need simple line charts, complex financial
-                charts, or anything in between, ApexCharts has got you covered.</p>
-        </div>
-    </div>
-</div>
-
-<div class="grid place-items-center">
-    <div class="flex flex-col max-w-[320px] m-10">
-        <div class="flex items-start mb-4 mr-20">
-            <div>
-                <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg"
-                    alt="Jese image">
-            </div>
+<div class="ml-20 mt-10">
+    <p class="text-3xl font-bold">Data Lifecycle</p>
+    <ol class="relative border-s border-gray-200 dark:border-gray-700 mt-5">
+        <li class="mb-10 ms-4">
             <div
-                class="flex flex-col max-w-[240px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-3xl rounded-t-3xl dark:bg-gray-700">
-                <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Bonnie Green</span>
-                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
-                </div>
-                <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">That's awesome. I think our users
-                    will really appreciate the improvements.</p>
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Delivered</span>
+                class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
             </div>
-        </div>
-
-        <div class="flex items-end justify-end mb-4 ml-20">
+            <p class="text-lg font-semibold text-gray-900 dark:text-white">Creation</p>
+            <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">The data that we process with this
+                application is generated during engine testing. After creation, the data is stored in log files.</p>
+        </li>
+        <li class="mb-10 ms-4">
             <div
-                class="flex flex-col max-w-[240px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-t-3xl rounded-l-3xl dark:bg-gray-700">
-                <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Bonnie Green</span>
-                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
-                </div>
-                <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">That's awesome. I think our users
-                    will really appreciate the improvements.</p>
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Delivered</span>
+                class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
             </div>
-            <div>
-                <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="Jese image">
+            <p class="text-lg font-semibold text-gray-900 dark:text-white">Processing</p>
+            <p class="text-base font-normal text-gray-500 dark:text-gray-400">The log files are read out, evaluated and
+                written to a database using C# and MySQL.</p>
+        </li>
+        <li class="ms-4">
+            <div
+                class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
             </div>
-        </div>
-    </div>
+            <p class="text-lg font-semibold text-gray-900 dark:text-white">Visualization</p>
+            <p class="text-base font-normal text-gray-500 dark:text-gray-400">The data is sent to the website via a web
+                API and displayed there on the dashboard.</p>
+            <a href="/dashboard"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-red-600 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Go
+                to Dashboard
+                <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg></a>
+        </li>
+    </ol>
 </div>
