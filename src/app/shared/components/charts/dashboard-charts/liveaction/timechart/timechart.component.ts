@@ -68,6 +68,4 @@ export class TimechartComponent implements OnInit {
     this.chartOptions.series = series;
     this.chartOptions.labels = labels;
   }
-
-
 }
