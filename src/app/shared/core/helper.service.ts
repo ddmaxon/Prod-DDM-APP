@@ -12,7 +12,7 @@ export class HelperService {
    */
   _apis: any = {
     backend: {
-      url: 'https://localhost:7022',
+      url: 'https://localhost:7022/api',
     }
   };
 
