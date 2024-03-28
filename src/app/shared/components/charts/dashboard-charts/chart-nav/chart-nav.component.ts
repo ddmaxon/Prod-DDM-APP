@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
+interface IRoutes {
+  name: string,
+  link: string,
+  icon: string,
+  description: string,
+  isDisabled: boolean
+}
+
 @Component({
   selector: 'app-chart-nav',
   standalone: true,
@@ -21,13 +29,7 @@ export class ChartNavComponent implements OnInit {
     icon: 'live_tv'
   }
 
-  routes: Array<{
-    name: string,
-    link: string,
-    icon: string,
-    description: string,
-    isDisabled: boolean
-  }> = [
+  routes: Array<IRoutes> = [
     {
       name: 'Dashboard',
       link: '/dashboard',
