@@ -1,0 +1,19 @@
+<div>
+  <div class="mx-16 flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
+    @for(route of routes; track route.name){
+      @if (!route.isDisabled){
+        <a [routerLink]="route.link" [class]="isCurrent(route)" (click)="changeRoute(route)">
+          <mat-icon>{{route.icon}}</mat-icon>
+
+          <span class="mx-1 text-sm sm:text-base">
+            {{ route.name }}
+        </span>
+        </a>
+      }
+    }
+  </div>
+  <div class="mx-24 mt-8">
+    <p class="text-3xl">{{ current.name }}</p>
+    <p class="text-lg text-gray-500">{{ current.description }}</p>
+  </div>
+</div>
