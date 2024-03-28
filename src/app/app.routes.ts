@@ -17,7 +17,7 @@ export const routes: Routes = [
         component: DashboardComponent,
         children: [
             {
-                path: '', 
+                path: '',
                 title: 'DDM - Dashboard',
                 component: MainComponent
             },
@@ -27,9 +27,10 @@ export const routes: Routes = [
                 component: HistoryComponent
             },
             {
-                path: '#:section',
-                component: MainComponent
-            },
+                path: '**',
+                title: 'DDM - Error',
+                component: PagenotfoundComponent
+            }
         ]
     },
     {

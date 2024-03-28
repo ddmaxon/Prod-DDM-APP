@@ -1,19 +1,19 @@
-<div class="mx-16 flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
-    <a routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page"
-       class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:px-4 -px-1 whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 cursor-pointer">
-        <mat-icon>live_tv</mat-icon>
+<div>
+  <div class="mx-16 flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
+    @for(route of routes; track route.name){
+      @if (!route.isDisabled){
+        <a [routerLink]="route.link" [class]="isCurrent(route)" (click)="changeRoute(route)">
+          <mat-icon>{{route.icon}}</mat-icon>
 
-        <span class="mx-1 text-sm sm:text-base">
-            Profile
+          <span class="mx-1 text-sm sm:text-base">
+            {{ route.name }}
         </span>
-    </a>
-
-    <a routerLink="/dashboard/history" routerLinkActive="active" ariaCurrentWhenActive="page"
-       class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:px-4 -px-1 whitespace-nowrap cursor-base focus:outline-none border-gray-400 cursor-pointer">
-        <mat-icon>history</mat-icon>
-
-        <span class="mx-1 text-sm sm:text-base">
-            History
-        </span>
-    </a>
+        </a>
+      }
+    }
+  </div>
+  <div class="mx-24 mt-8">
+    <p class="text-3xl">{{ current.name }}</p>
+    <p class="text-lg text-gray-500">{{ current.description }}</p>
+  </div>
 </div>

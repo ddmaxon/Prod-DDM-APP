@@ -3,7 +3,7 @@
         <div class="carousel-item w-full px-44">
             <div class="mr-32">
                 <div *ngIf="isRequestDone; else isRequesting">
-                    <app-timechart [data]="data" title=""></app-timechart>
+                    <app-timechart [data]="data"></app-timechart>
                 </div>
 
                 <ng-template #isRequesting>
