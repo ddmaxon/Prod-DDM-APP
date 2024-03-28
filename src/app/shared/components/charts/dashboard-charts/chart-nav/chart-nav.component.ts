@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-interface IRoutes {
+interface IRoute {
   name: string,
   link: string,
   icon: string,
@@ -23,13 +23,15 @@ interface IRoutes {
   styleUrl: './chart-nav.component.scss'
 })
 export class ChartNavComponent implements OnInit {
-  current: any = {
-    name: 'Dashboard',
-    link: '/dashboard',
-    icon: 'live_tv'
-  }
+  public current: IRoute = {
+    name: '',
+    link: '',
+    icon: '',
+    description: '',
+    isDisabled: false
+  };
 
-  routes: Array<IRoutes> = [
+  public routes: Array<IRoute> = [
     {
       name: 'Dashboard',
       link: '/dashboard',
@@ -60,11 +62,11 @@ export class ChartNavComponent implements OnInit {
     this.current = this.routes.find(route => route.link === this.router.url) || this.routes[0];
   }
 
-  changeRoute(route: any): void {
+  public changeRoute(route: IRoute): void {
     this.current = route;
   }
 
-  isCurrent(route: any): string {
+  public isCurrent(route: IRoute): string {
     if(this.current === route){
       return 'inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 border-gray-500 sm:px-4 -px-1 whitespace-nowrap cursor-base focus:outline-none hover:border-gray-300 cursor-pointer';
     }
